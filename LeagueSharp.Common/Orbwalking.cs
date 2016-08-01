@@ -331,7 +331,6 @@ namespace LeagueSharp.Common
         {
             if (AfterAttack != null && target.LSIsValidTarget())
             {
-     //           Chat.Print("AfterAttack");
                 AfterAttack(unit, target);
             }
         }
@@ -409,7 +408,6 @@ namespace LeagueSharp.Common
                         result += 650;
                     }
                 }
-
                 return result + target.BoundingRadius;
             }
 
@@ -488,7 +486,7 @@ namespace LeagueSharp.Common
                 return false;
             }
             //            Game.PrintChat((Utils.GameTimeTickCount + Game.Ping / 2 + 25 >= LastAATick + Player.AttackDelay * 1000).ToString());
-            return Utils.GameTimeTickCount + Game.Ping / 2 + 25 >= LastAATick + Player.AttackDelay * 1000;
+            return Utils.GameTimeTickCount + Game.Ping / 2 + 45 >= LastAATick + Player.AttackDelay * 1000;
         }
 
         /// <summary>
@@ -639,8 +637,8 @@ namespace LeagueSharp.Common
             }
             try
             {
-                //if (target.LSIsValidTarget() && Attack && EloBuddy.SDK.Orbwalker.CanAutoAttack)
-                if (target.LSIsValidTarget() && Attack && CanAttack())
+                if (target.LSIsValidTarget() && Attack && EloBuddy.SDK.Orbwalker.CanAutoAttack)
+                //if (target.LSIsValidTarget() && Attack && CanAttack())
                 {
                     DisableNextAttack = false;
                     FireBeforeAttack(target);
@@ -662,7 +660,8 @@ namespace LeagueSharp.Common
                         return;
                     }
                 }
-                  if (EloBuddy.SDK.Orbwalker.CanMove && Move)
+
+                if (EloBuddy.SDK.Orbwalker.CanMove && Move)
                 //if (CanMove(extraWindup) && Move)
                 {
                     if (Orbwalker.LimitAttackSpeed && (Player.AttackDelay < 1 / 2.6f) && _autoattackCounter % 3 != 0 &&
@@ -671,7 +670,7 @@ namespace LeagueSharp.Common
                         return;
                     }
                     MoveTo(position, Math.Max(holdAreaRadius, 30), false, useFixedDistance, randomizeMinDistance);
-                }
+                }//*/
             }
             catch (Exception e)
             {
@@ -758,10 +757,16 @@ namespace LeagueSharp.Common
                 Console.WriteLine(e);
             }
         }
+
         private static void OnProcessSpell(Obj_AI_Base unit, GameObjectProcessSpellCastEventArgs Spell)
         {
             try
             {
+                if (unit.IsMe && IsAutoAttackReset(Spell.SData.Name) && Math.Abs(Spell.SData.CastTime) < 1.401298E-45f)
+                {
+                    ResetAutoAttackTimer();
+                }
+
                 if (unit.IsMe && (Spell.Target is Obj_AI_Base || Spell.Target is Obj_BarracksDampener || Spell.Target is Obj_HQ))
                 {
                     LastAATick = Utils.GameTimeTickCount - Game.Ping / 2;
@@ -832,7 +837,7 @@ namespace LeagueSharp.Common
             /// <summary>
             ///     The lane clear wait time modifier.
             /// </summary>
-            private const float LaneClearWaitTimeMod = 2f;
+            private const float LaneClearWaitTimeMod = 0.5f;
 
             /// <summary>
             ///     The configuration
