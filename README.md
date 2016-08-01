@@ -1,7 +1,5 @@
 # Port
-PortAIO
+Personal port repository
 
-Port thư viện Common của L#. Đang trong quá trình Beta nên mọi người sử dụng ai bị bug thì comment lại để mình fix và hoàn thiện nhé.
-
-Mục tiêu sắp tới là thư viện SDKex.
-Mục tiêu xa là sẽ có cộng đồng Việt dùng L# free trên Core Elo.
+I'm gonna share here some ports which i'm gonna use https://github.com/cttbot/Port LeagueSharp.Common port as base.
+Install LeagueSharp.Dataa and then LeagueSharp.Common to install the addons. Wait for the game to load and press F5 to load the addons.
