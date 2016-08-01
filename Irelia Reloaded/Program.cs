@@ -439,8 +439,8 @@
                 ObjectManager.Get<AIHeroClient>().Where(x => x.CanStunTarget() && x.LSIsValidTarget()))
             {
                 var drawPos = Drawing.WorldToScreen(unit.Position);
-                var textSize = Drawing.GetTextEntent("Stunnable", 10);
-                Drawing.DrawText(drawPos.X - textSize.Width / 2f, drawPos.Y, Color.Aqua, "Stunnable");
+                var textSize = 60;
+                Drawing.DrawText(drawPos.X - textSize / 2f, drawPos.Y, Color.Aqua, "Stunnable");
             }
         }
 
